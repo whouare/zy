@@ -1,0 +1,62 @@
+## py 依赖
+```
+pycryptodome	
+pytz	
+typescript	
+httpx	
+success	
+--upgrade pip	
+pip	
+redis	
+jieba	
+canvas	
+requests	
+ping3	
+PyExecJS
+
+```
+
+```
+ds	
+json5	
+js-base64	
+require	
+tough-cookie	
+jsdom	
+global-agent	
+@types/node	
+typescript	
+dotenv	
+jsdom -g	
+form-data	
+png-js	
+ts-md5	
+tslib	
+jieba	
+ws@7.4.3	
+axios	
+date-fns	
+moment	
+prettytable	
+fs	
+crypto-js	
+ts-node	
+depend	
+ds	
+jsdom	
+requests	
+npm	
+node-jsencrypt	
+-g npm	
+cjs	
+upgrade pip	
+common	
+qs	
+ql	
+crypto -g	
+-g typescipt	
+https	
+proxy	
+agent
+
+```
