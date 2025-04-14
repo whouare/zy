@@ -1,4 +1,5 @@
-#福田抽奖活动可能一次性的 账户#密码 多账户换行
+#福田抽奖活动可能一次性的 ## 福田e家
+## export FTEJ="账户&密码"  多账户换行
 import requests
 import json
 import os
@@ -65,10 +66,10 @@ def lottery(encrypt_member_id):
 
 
 def main(token):
-    if "#" not in token:
-        print("[错误] >>> token 格式错误，应为 '手机号#密码'")
+    if "&" not in token:
+        print("[错误] >>> token 格式错误，应为 '手机号&密码'")
         return
-    phone, password = token.split("#", 1)
+    phone, password = token.split("&", 1)
     encrypt_member_id = user_login(phone, password)
     if encrypt_member_id:
         for _ in range(3):  # 添加循环，让每个账号抽奖三次
@@ -84,7 +85,7 @@ if __name__ == "__main__":
     if env:
         TOKEN = os.environ.get("FTEJ")
     else:
-        print("未检测到环境变量 futian_bks，启用内置变量")
+        print("未检测到环境变量 FTEJ，启用内置变量")
         TOKEN = ""
     tokenList = TOKEN.split("\n")
     #random.shuffle(tokenList)
