@@ -1,9 +1,12 @@
 # cron: 10 */2 * * *
 # new Env('更新IP代理白名单');
-#有问题联系3288588344
-#频道：https://pd.qq.com/s/672fku8ge
 
-#长期套餐大额流量电话卡办理地址：https://hk.yunhaoka.cn/#/pages/micro_store/index?agent_id=669709
+
+#长期套餐大额流量电话卡办理地址：https://img.hnking.cn//blog/202504141427660.png
+
+## 携趣代理地址 https://www.xiequ.cn/index.html?d630539f
+## 星空代理地址 https://www.xkdaili.com/
+## 巨量代理地址 https://www.juliangip.com/user/reg?inviteCode=1040216
 
 
 import requests
