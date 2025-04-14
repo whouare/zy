@@ -1,18 +1,19 @@
 # cron: 10 */2 * * *
 # new Env('更新IP代理白名单');
+import os
 
-
-#长期套餐大额流量电话卡办理地址：https://img.hnking.cn//blog/202504141427660.png
+# 长期套餐大额流量电话卡办理地址：https://img.hnking.cn//blog/202504141427660.png
 
 ## 携趣代理地址 https://www.xiequ.cn/index.html?d630539f
 ## 星空代理地址 https://www.xkdaili.com/
 ## 巨量代理地址 https://www.juliangip.com/user/reg?inviteCode=1040216
-
+# 携趣环境变量 export XIEQU='UID=xxx;UKEY=xxx'
+# 星空环境变量 export XK='APIKEY=xxx;SIGN=xxx'
+# 巨量环境变量 export JULIANG='KEY=xxx;TRADE_NO=xxx'
 
 import requests
 import hashlib
 import urllib.parse
-
 
 JULIANG_KEY = ''  # 填入巨量的 Key
 JULIANG_TRADE_NO = ''  # 填入巨量的 Trade No
@@ -33,13 +34,38 @@ class SignKit:
     def get_sign_content(params):
         params.pop('sign', None)  # 删除 sign
         sorted_params = sorted(params.items())
-        sign_content = '&'.join([f"{k}={str(v)}" for k, v in sorted_params if str(v) is not None and not str(v).startswith('@')])
+        sign_content = '&'.join(
+            [f"{k}={str(v)}" for k, v in sorted_params if str(v) is not None and not str(v).startswith('@')])
         return sign_content
 
+
+# def get_current_ip():
+#     response = requests.get('https://myip.ipip.net/json')
+#     data = response.json()
+#     return data['data']['ip']
 def get_current_ip():
-    response = requests.get('https://myip.ipip.net/json')
-    data = response.json()
-    return data['data']['ip']
+    """获取当前 IP 地址"""
+    try:
+        response = requests.get('https://httpbin.org/ip')
+        response.raise_for_status()
+        res = response.json().get('origin')
+        return res
+    except requests.exceptions.RequestException as e:
+        print(f"Failed to fetch the current IP: {e}")
+        return get_current_ip2()
+
+
+# https://ip.3322.net
+
+def get_current_ip2():
+    api_url = f"https://ip.3322.net"
+    try:
+        response = requests.get(api_url)
+        response.raise_for_status()
+        return response.text
+    except requests.exceptions.RequestException as e:
+        print(f"Failed to fetch information for IP: {e}")
+
 
 def update_juliang_white_list(ip, JULIANG_KEY, JULIANG_TRADE_NO):
     if JULIANG_KEY and JULIANG_TRADE_NO:
@@ -55,11 +81,13 @@ def update_juliang_white_list(ip, JULIANG_KEY, JULIANG_TRADE_NO):
         response = requests.get(url)
         return response.text
 
+
 def update_xk_white_list(ip, XK_APIKEY, XK_SIGN):
     if XK_APIKEY and XK_SIGN:
         url = f'http://api2.xkdaili.com/tools/XApi.ashx?apikey={XK_APIKEY}&type=addwhiteip&sign={XK_SIGN}&flag=8&ip={ip}'
         response = requests.get(url)
         return response.text
+
 
 def update_xiequ_white_list(ip, XIEQU_UID, XIEQU_UKEY):
     if XIEQU_UID and XIEQU_UKEY:
@@ -69,7 +97,8 @@ def update_xiequ_white_list(ip, XIEQU_UID, XIEQU_UKEY):
         arr = data.split(',')
         if ip not in arr:
             requests.get(f'http://op.xiequ.cn/IpWhiteList.aspx?uid={XIEQU_UID}&ukey={XIEQU_UKEY}&act=del&ip=all')
-            response = requests.get(f'http://op.xiequ.cn/IpWhiteList.aspx?uid={XIEQU_UID}&ukey={XIEQU_UKEY}&act=add&ip={ip}')
+            response = requests.get(
+                f'http://op.xiequ.cn/IpWhiteList.aspx?uid={XIEQU_UID}&ukey={XIEQU_UKEY}&act=add&ip={ip}')
             return '更新xiequ白名单成功' if response.status_code == 200 else '更新xiequ白名单出错'
         else:
             return '携趣白名单ip未变化'
@@ -78,10 +107,43 @@ def update_xiequ_white_list(ip, XIEQU_UID, XIEQU_UKEY):
 def main():
     ip = get_current_ip()
     print('当前ip地址：', ip)
+    print('''#长期套餐大额流量电话卡办理地址：https://img.hnking.cn//blog/202504141427660.png
+## 携趣代理地址 https://www.xiequ.cn/index.html?d630539f
+## 星空代理地址 https://www.xkdaili.com/
+## 巨量代理地址 https://www.juliangip.com/user/reg?inviteCode=1040216
+# 携趣环境变量 export XIEQU='UID=xxx;UKEY=xxx' 
+# 星空环境变量 export XK='APIKEY=xxx;SIGN=xxx'
+# 巨量环境变量 export JULIANG='KEY=xxx;TRADE_NO=xxx'
+    ''')
+    # 从青龙面板 获取变量
+    # export XIEQU='UID=xxx;UKEY=xxx'
+    # export XK='APIKEY=xxx;SIGN=xxx'
+    # export JULIANG='KEY=xxx;TRADE_NO=xxx'
 
-    print('更新巨量白名单结果：', update_juliang_white_list(ip, JULIANG_KEY, JULIANG_TRADE_NO))
-    print('更新星空白名单结果：', update_xk_white_list(ip, XK_APIKEY, XK_SIGN))
-    print('更新携趣白名单结果：', update_xiequ_white_list(ip, XIEQU_UID, XIEQU_UKEY))
+    JULIANG = os.getenv('JULIANG')
+    XK = os.getenv('XK')
+    XIEQU = os.getenv('XIEQU')
+    if XIEQU != None:
+        XIEQU_UID = XIEQU.split(';')[0].split('=')[1]
+        XIEQU_UKEY = XIEQU.split(';')[1].split('=')[1]
+    if JULIANG != None:
+        JULIANG_KEY = JULIANG.split(';')[0].split('=')[1]
+        JULIANG_TRADE_NO = JULIANG.split(';')[1].split('=')[1]
+    if XK != None:
+        XK_APIKEY = XK.split(';')[0].split('=')[1]
+        XK_SIGN = XK.split(';')[1].split('=')[1]
+
+    if JULIANG_KEY == None and XK_APIKEY == None and XIEQU_UID == None:
+        print('未配置任何环境变量')
+        return
+    print('更新当前IP：', ip)
+    if JULIANG_KEY != None and JULIANG_TRADE_NO != None:
+        print('更新巨量白名单结果：', update_juliang_white_list(ip, JULIANG_KEY, JULIANG_TRADE_NO))
+    if XK_APIKEY != None and XK_SIGN != None:
+        print('更新星空白名单结果：', update_xk_white_list(ip, XK_APIKEY, XK_SIGN))
+    if XIEQU_UID != None and XIEQU_UKEY != None:
+        print('更新携趣白名单结果：', update_xiequ_white_list(ip, XIEQU_UID, XIEQU_UKEY))
+
 
 if __name__ == "__main__":
     main()
