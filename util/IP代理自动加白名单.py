@@ -15,12 +15,6 @@ import requests
 import hashlib
 import urllib.parse
 
-JULIANG_KEY = ''  # 填入巨量的 Key
-JULIANG_TRADE_NO = ''  # 填入巨量的 Trade No
-XK_APIKEY = ''  # 填入星空的 API Key
-XK_SIGN = ''  # 填入星空的 Sign
-XIEQU_UID = ''  # 填入携趣的 UID
-XIEQU_UKEY = ''  # 填入携趣的 UKEY
 
 
 class SignKit:
@@ -94,7 +88,11 @@ def update_xiequ_white_list(ip, XIEQU_UID, XIEQU_UKEY):
         url = f'http://op.xiequ.cn/IpWhiteList.aspx?uid={XIEQU_UID}&ukey={XIEQU_UKEY}&act=get'
         response = requests.get(url)
         data = response.text
+        print(data)
         arr = data.split(',')
+        print(arr)
+        if ip in arr:
+            return '携趣白名单ip未变化'
         if ip not in arr:
             requests.get(f'http://op.xiequ.cn/IpWhiteList.aspx?uid={XIEQU_UID}&ukey={XIEQU_UKEY}&act=del&ip=all')
             response = requests.get(
@@ -106,6 +104,8 @@ def update_xiequ_white_list(ip, XIEQU_UID, XIEQU_UKEY):
 
 def main():
     ip = get_current_ip()
+
+
     print('当前ip地址：', ip)
     print('''#长期套餐大额流量电话卡办理地址：https://img.hnking.cn//blog/202504141427660.png
 ## 携趣代理地址 https://www.xiequ.cn/index.html?d630539f
@@ -119,6 +119,12 @@ def main():
     # export XIEQU='UID=xxx;UKEY=xxx'
     # export XK='APIKEY=xxx;SIGN=xxx'
     # export JULIANG='KEY=xxx;TRADE_NO=xxx'
+    JULIANG_KEY = ''  # 填入巨量的 Key
+    JULIANG_TRADE_NO = ''  # 填入巨量的 Trade No
+    XK_APIKEY = ''  # 填入星空的 API Key
+    XK_SIGN = ''  # 填入星空的 Sign
+    XIEQU_UID = ''  # 填入携趣的 UID
+    XIEQU_UKEY = ''  # 填入携趣的 UKEY
 
     JULIANG = os.getenv('JULIANG')
     XK = os.getenv('XK')
@@ -133,9 +139,6 @@ def main():
         XK_APIKEY = XK.split(';')[0].split('=')[1]
         XK_SIGN = XK.split(';')[1].split('=')[1]
 
-    if JULIANG_KEY == None and XK_APIKEY == None and XIEQU_UID == None:
-        print('未配置任何环境变量')
-        return
     print('更新当前IP：', ip)
     if JULIANG_KEY != None and JULIANG_TRADE_NO != None:
         print('更新巨量白名单结果：', update_juliang_white_list(ip, JULIANG_KEY, JULIANG_TRADE_NO))
