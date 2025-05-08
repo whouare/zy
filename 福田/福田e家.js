@@ -1,6 +1,7 @@
 /**
  * cron "39 11,19 * * *" FTEJ.js
  * export FTEJ="账号1&密码1 账号2&密码2"
+ * 已经关闭皮卡生活 若要开启请取消 30 -45  行注释
  */
 const $ = new Env('福田e家')
 const FTEJ = ($.isNode() ? process.env.FTEJ : $.getdata("FTEJ")) || '';
@@ -26,22 +27,22 @@ async function main() {
             password = item.split("&")[1]
             console.log(`用户：${phone}开始任务`)
             console.log('皮卡生活登录')
-            let pkLogin = await pkLoginPost('/ehomes-new/pkHome/api/user/getLoginMember2nd', {"memberId":"","memberID":"","mobile":"","token":"7fe186bb15ff4426ae84f300f05d9c8d","vin":"","safeEnc":Date.now()-10110000,"name":phone,"password":password,"position":"","deviceId":"","deviceBrand":"","brandName":"","deviceType":"0","versionCode":"21","versionName":"V1.1.10"})
-            console.log(pkLogin.msg)
-            if (pkLogin.code != 200) {
-                continue
-            }
-            uid = pkLogin.data.uid;
-            memberComplexCode = pkLogin.data.memberComplexCode;
-            memberId = pkLogin.data.user.memberNo;
-            token = pkLogin.data.token;
-            console.log('开始签到')
-            let pkSign = await pkPost('/ehomes-new/pkHome/api/bonus/signActivity2nd', {"memberId":memberComplexCode,"memberID":memberId,"mobile":phone,"token":"7fe186bb15ff4426ae84f300f05d9c8d","vin":"","safeEnc":Date.now()-10110000})
-            if (pkSign.data.integral) {
-                console.log(`签到成功，获得${pkSign.data.integral}积分`)
-            } else {
-                console.log(pkSign.data.msg)
-            }
+            // let pkLogin = await pkLoginPost('/ehomes-new/pkHome/api/user/getLoginMember2nd', {"memberId":"","memberID":"","mobile":"","token":"7fe186bb15ff4426ae84f300f05d9c8d","vin":"","safeEnc":Date.now()-10110000,"name":phone,"password":password,"position":"","deviceId":"","deviceBrand":"","brandName":"","deviceType":"0","versionCode":"21","versionName":"V1.1.10"})
+            // console.log(pkLogin.msg)
+            // if (pkLogin.code != 200) {
+            //     continue
+            // }
+            // uid = pkLogin.data.uid;
+            // memberComplexCode = pkLogin.data.memberComplexCode;
+            // memberId = pkLogin.data.user.memberNo;
+            // token = pkLogin.data.token;
+            // console.log('开始签到')
+            // let pkSign = await pkPost('/ehomes-new/pkHome/api/bonus/signActivity2nd', {"memberId":memberComplexCode,"memberID":memberId,"mobile":phone,"token":"7fe186bb15ff4426ae84f300f05d9c8d","vin":"","safeEnc":Date.now()-10110000})
+            // if (pkSign.data.integral) {
+            //     console.log(`签到成功，获得${pkSign.data.integral}积分`)
+            // } else {
+            //     console.log(pkSign.data.msg)
+            // }
             // console.log("————————————")
             // console.log("开始任务")
             // console.log('关注')
@@ -142,6 +143,7 @@ async function main() {
             console.log("查询积分")
             let findMemberPointsInfo = await commonPost('/ehomes-new/homeManager/api/Member/findMemberPointsInfo',{"memberId":memberId,"userId":uid,"userType":"61","uid":uid,"mobile":phone,"tel":phone,"phone":phone,"brandName":"","seriesName":"","token":"ebf76685e48d4e14a9de6fccc76483e3","safeEnc":Date.now()-20220000,"businessId":1})
             console.log(`拥有积分: ${findMemberPointsInfo?.data?.pointValue}\n`)
+            phone = hidePhoneNumber(phone);
             notice += `用户：${phone} 拥有积分: ${findMemberPointsInfo?.data?.pointValue}\n`
         } catch (e) {
             console.log(e)
@@ -150,6 +152,13 @@ async function main() {
     if (notice) {
         await sendMsg(notice);
     }
+}
+
+function hidePhoneNumber(phoneNumber) {
+    if (phoneNumber.length === 11) { // 假设是中国的手机号码，通常是11位
+        return phoneNumber.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2');
+    }
+    return phoneNumber; // 或者返回原始号码，如果格式不正确
 }
 
 async function loginPost(url,body) {
