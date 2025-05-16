@@ -1,5 +1,5 @@
 
-# 笨笨诈骗版 顺丰代挂
+#  顺丰代挂
 # 有问题请及时联系笨笨 v:Bbvip666a （有其他想要的脚本也可以联系，尽量试着写一写）
 # 环境变量 sfsybbUrl   多账号使用换行分割
 # 打开小程序抓这种链接即可：https://mcs-mimp-web.sf-express.com/mcs-mimp/share/weChat/shareGiftReceiveRedirect
