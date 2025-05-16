@@ -11,6 +11,7 @@ from sys import exit
 import requests
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 from datetime import datetime
+from sendNotify import send
 from urllib.parse import unquote
 
 os.environ['NEW_VAR'] ='sfsyUrl'
