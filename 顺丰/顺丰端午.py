@@ -31,8 +31,7 @@ def Log(cont=''):
         one_msg += f'{cont}\n'
         send_msg += f'{cont}\n'
         
-inviteId = ['A959FF988C64448198CDEB08FC84844F','0A5BCEB5EA454B878C34EB01A33AF080']
-
+inviteId = ['15B892B84AA3418B8BE6856D5A4F1119']
 def sunquote(sfurl):
     decode = unquote(sfurl)
     if "3A//" in decode:
