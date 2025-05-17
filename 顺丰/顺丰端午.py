@@ -11,7 +11,7 @@ from sys import exit
 import requests
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 from datetime import datetime
-from sendNotify import send
+
 from urllib.parse import unquote
 
 os.environ['NEW_VAR'] ='sfsyUrl'
@@ -31,7 +31,7 @@ def Log(cont=''):
         one_msg += f'{cont}\n'
         send_msg += f'{cont}\n'
         
-inviteId = ['15B892B84AA3418B8BE6856D5A4F1119']
+inviteId = ['15B892B84AA3418B8BE6856D5A4F1119','54BC6335A52A4197ACA8E32BB57CCFE5']
 def sunquote(sfurl):
     decode = unquote(sfurl)
     if "3A//" in decode:

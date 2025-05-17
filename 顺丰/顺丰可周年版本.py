@@ -34,7 +34,7 @@ def Log(cont=''):
         send_msg += f'{cont}\n'
 
 
-inviteId = ['15B892B84AA3418B8BE6856D5A4F1119']
+inviteId = ['15B892B84AA3418B8BE6856D5A4F1119','54BC6335A52A4197ACA8E32BB57CCFE5']
 
 
 class RUN:
