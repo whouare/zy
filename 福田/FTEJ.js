@@ -25,45 +25,45 @@ async function main() {
             phone = item.split("&")[0]
             password = item.split("&")[1]
             console.log(`用户：${phone}开始任务`)
-            // console.log('皮卡生活登录')
-            // let pkLogin = await pkLoginPost('/ehomes-new/pkHome/api/user/getLoginMember2nd', {
-            //     "memberId": "",
-            //     "memberID": "",
-            //     "mobile": "",
-            //     "token": "7fe186bb15ff4426ae84f300f05d9c8d",
-            //     "vin": "",
-            //     "safeEnc": Date.now() - 1011010100,
-            //     "name": phone,
-            //     "password": password,
-            //     "position": "",
-            //     "deviceId": "",
-            //     "deviceBrand": "",
-            //     "brandName": "",
-            //     "deviceType": "0",
-            //     "versionCode": "21",
-            //     "versionName": "V1.1.16"
-            // })
-            // console.log(pkLogin?.msg)
-            // if (pkLogin?.code == 200) {
-            //     uid = pkLogin.data.uid;
-            //     memberComplexCode = pkLogin.data.memberComplexCode;
-            //     memberId = pkLogin.data.user.memberNo;
-            //     token = pkLogin.data.token;
-            //     console.log('开始签到')
-            //     let pkSign = await pkPost('/ehomes-new/pkHome/api/bonus/signActivity2nd', {
-            //         "memberId": memberComplexCode,
-            //         "memberID": memberId,
-            //         "mobile": phone,
-            //         "token": "7fe186bb15ff4426ae84f300f05d9c8d",
-            //         "vin": "",
-            //         "safeEnc": Date.now() - 1011010100
-            //     })
-            //     if (pkSign.data.integral) {
-            //         console.log(`签到成功，获得${pkSign.data.integral}积分`)
-            //     } else {
-            //         console.log(pkSign.data.msg)
-            //     }
-            // }
+            console.log('皮卡生活登录')
+            let pkLogin = await pkLoginPost('/ehomes-new/pkHome/api/user/getLoginMember2nd', {
+                "memberId": "",
+                "memberID": "",
+                "mobile": "",
+                "token": "7fe186bb15ff4426ae84f300f05d9c8d",
+                "vin": "",
+                "safeEnc": Date.now() - 1011010100,
+                "name": phone,
+                "password": password,
+                "position": "",
+                "deviceId": "",
+                "deviceBrand": "",
+                "brandName": "",
+                "deviceType": "0",
+                "versionCode": "21",
+                "versionName": "V1.1.16"
+            })
+            console.log(pkLogin?.msg)
+            if (pkLogin?.code == 200) {
+                uid = pkLogin.data.uid;
+                memberComplexCode = pkLogin.data.memberComplexCode;
+                memberId = pkLogin.data.user.memberNo;
+                token = pkLogin.data.token;
+                console.log('开始签到')
+                let pkSign = await pkPost('/ehomes-new/pkHome/api/bonus/signActivity2nd', {
+                    "memberId": memberComplexCode,
+                    "memberID": memberId,
+                    "mobile": phone,
+                    "token": "7fe186bb15ff4426ae84f300f05d9c8d",
+                    "vin": "",
+                    "safeEnc": Date.now() - 1011010100
+                })
+                if (pkSign.data.integral) {
+                    console.log(`签到成功，获得${pkSign.data.integral}积分`)
+                } else {
+                    console.log(pkSign.data.msg)
+                }
+            }
             // console.log("————————————")
             // console.log("开始任务")
             // console.log('关注')
@@ -104,6 +104,32 @@ async function main() {
             uid = login.data.uid;
             memberComplexCode = login.data.memberComplexCode;
             memberId = login.data.memberID;
+            let open = await commonPost('/ehomes-new/homeManager/api/share/corsToActicity',{
+                "memberId": memberId,
+                "userId": uid,
+                "userType": "61",
+                "uid": uid,
+                "mobile": phone,
+                "tel": phone,
+                "phone": phone,
+                "brandName": "",
+                "seriesName": "",
+                "token": "ebf76685e48d4e14a9de6fccc76483e3",
+                "safeEnc": Date.now() - 2022020200,
+                "businessId": 1,
+                "activityNumber": "open",
+                "requestType": "0",
+                "type": "5",
+                "userNumber": memberId,
+                "channel": "1",
+                "name": "",
+                "remark": "打开APP"
+            })
+            if (open.code == 200) {
+                console.log('打开app成功')
+            } else {
+                console.log(`打开app：${open.msg}`)
+            }
             // console.log('活动签到')
             // let sign = await activityPost('/shareCars/c250224/sign.action',`encryptMemberId=${memberComplexCode}`)
             // console.log(sign.msg)
@@ -301,11 +327,28 @@ async function main() {
                 "businessId": 1
             })
             console.log(`拥有积分: ${findMemberPointsInfo?.data?.pointValue}\n`)
-            //电话号隐私
-            if (phone.length == 11) {
-                phone = phone.substring(0, 3) + "****" + phone.substring(7)
-            }
             notice += `用户：${phone} 拥有积分: ${findMemberPointsInfo?.data?.pointValue}\n`
+            console.log("————————————")
+            console.log("查询兑换")
+            let findMemberPointsInfoa = await commonPost('/ehomes-new/homeManager/api/other/foton365MyOrders', {
+                "memberId": memberId,
+                "userId": uid,
+                "userType": "61",
+                "uid": uid,
+                "mobile": phone,
+                "tel": phone,
+                "phone": phone,
+                "brandName": "",
+                "seriesName": "",
+                "token": "ebf76685e48d4e14a9de6fccc76483e3",
+                "safeEnc": Date.now() - 2022020200,
+                "businessId": 1,
+                "pageNum":1,
+                "pageSize":10,
+            })
+            for (const dddd of findMemberPointsInfoa?.data?.items) {
+                console.log(`${dddd.productList[0].name}：${dddd.orderStatusName}\n`)
+            }
         } catch (e) {
             console.log(e)
         }
