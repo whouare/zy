@@ -400,30 +400,31 @@ def process_account(account, i):
 
             if biz == "❗未知来源文章" or biz in checkDict:
                 print(f"❗❗❗发现检测文章--- {biz}", flush=True)
-                url_pushplus = "http://www.pushplus.plus/send"
-                data_pushplus = {
-                    "token": token, "title": "⚠️ 小阅阅检测文章！请在120s内完成阅读！",
-                    "content": f'<a href="{link}" target="_blank">👉点击阅读8s以上并返回</a><br>链接(备用): {link}',
-                    "template": "html"
-                }
-                push_success = False
-                for attempt in range(max_retries):
-                    try:
-                        response_push = requests.post(url_pushplus, data=data_pushplus, timeout=10).json()
-                        if response_push.get("code") == 200:
-                            print(f"❗❗❗检测文章已推送至微信，请到微信完成阅读…\n🕗{detection_delay}s后继续运行…",
-                                  flush=True)
-                            push_success = True
-                            break
-                        else:
-                            print(f"❗❗❗检测文章推送失败: {response_push.get('msg', '未知错误')}", flush=True)
-                    except Exception as e_push:
-                        print(f"❗❗❗推送请求异常：{str(e_push)}", flush=True)
-                    if attempt < max_retries - 1: print("❗❗❗正在尝试重新推送...", flush=True); time.sleep(3.5)
-
-                if not push_success:
-                    print(f"❗❗❗检测文章推送最终失败，脚本终止。", flush=True)
-                    return
+                QLAPI.notify("⚠️ 小阅阅检测文章！请在120s内完成阅读！",link)
+                # url_pushplus = "http://www.pushplus.plus/send"
+                # data_pushplus = {
+                #     "token": token, "title": "⚠️ 小阅阅检测文章！请在120s内完成阅读！",
+                #     "content": f'<a href="{link}" target="_blank">👉点击阅读8s以上并返回</a><br>链接(备用): {link}',
+                #     "template": "html"
+                # }
+                # push_success = False
+                # for attempt in range(max_retries):
+                #     try:
+                #         response_push = requests.post(url_pushplus, data=data_pushplus, timeout=10).json()
+                #         if response_push.get("code") == 200:
+                #             print(f"❗❗❗检测文章已推送至微信，请到微信完成阅读…\n🕗{detection_delay}s后继续运行…",
+                #                   flush=True)
+                #             push_success = True
+                #             break
+                #         else:
+                #             print(f"❗❗❗检测文章推送失败: {response_push.get('msg', '未知错误')}", flush=True)
+                #     except Exception as e_push:
+                #         print(f"❗❗❗推送请求异常：{str(e_push)}", flush=True)
+                #     if attempt < max_retries - 1: print("❗❗❗正在尝试重新推送...", flush=True); time.sleep(3.5)
+                #
+                # if not push_success:
+                #     print(f"❗❗❗检测文章推送最终失败，脚本终止。", flush=True)
+                #     return
 
                 time.sleep(detection_delay)
                 url_submit_detection = f"{article_page_url_parts.scheme}://{article_page_url_parts.netloc}/jinbicp?gt={gt}&time={read_sleep_time}&timestamp={current_timestamp}"
