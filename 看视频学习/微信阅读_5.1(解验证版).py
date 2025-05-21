@@ -8,12 +8,12 @@
 # 二、环境变量配置
 #
 # 1. xyy (账号信息，必需)
-#    格式: ysmuid&unionid&token
+#    格式: ysmuid&unionid&XXX
 #    多账号格式: 账号1@账号2@账号3
-#    示例: 5a68xxxxxxx&oZdBpxxxxxxx&ff2cdxxxxxxx@5a68xxx&oZdBpxxx&ff2cdxxx
+#    示例: 5a68xxxxxxx&oZdBpxxxxxxx&XXX@5a68xxx&oZdBpxxx&ff2cdxxx
 #    - ysmuid: 从Cookie中抓取
 #    - unionid: 从请求体中抓取
-#    - token: pushplus推送加的token，用于接收检测文章
+#    - XXX:XXX
 #
 # 2. UA (User-Agent，必需)
 #    格式: 浏览器或设备的User-Agent字符串
