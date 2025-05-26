@@ -1,7 +1,6 @@
 #大国医道羌医探秘答题领现金红包！
 #下方""中间填写授权码！
-
-sqm = ""
+sqm = "1f8748bc243704c12bd3bd107ff638a288a165f571d2b54a25efd0ace1032f09"
 
 #使用方法:
 #抓包只需要抓openid和课程id
@@ -20,10 +19,10 @@ sqm = ""
 #复制抓包url中activityV2?id= 的值填到下方id=的""中间
 #或者复制抓包url中activityDetatil?id= 的值填到下方id=的""中间
 #如果你不同的号在不同的群 起线不同 则多个不同的课程id用#隔开
-id = ""
+id = "f06ad2c1b2594b2b351986ac240c491d"
 
-#host根据你抓包的url修改即可，非必要请勿修改！
-host = "voyblr.wap.aiyinyueta.cn"
+#host根据你抓包的url修改即可，非必要请勿修改
+host = "api.h5.sagx.net"
 #填写host不需要带http://或https://
 
 import requests
@@ -57,6 +56,7 @@ for id in id_list:
         }
         fh = requests.get(url, headers=headers)
         fh_json = fh.json()
+        print(fh_json)
         status = fh_json.get("status")
         if status == "error":
             print(fh_json["message"]) 
