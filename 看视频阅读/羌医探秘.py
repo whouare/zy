@@ -19,7 +19,9 @@ sqm = "1f8748bc243704c12bd3bd107ff638a288a165f571d2b54a25efd0ace1032f09"
 #复制抓包url中activityV2?id= 的值填到下方id=的""中间
 #或者复制抓包url中activityDetatil?id= 的值填到下方id=的""中间
 #如果你不同的号在不同的群 起线不同 则多个不同的课程id用#隔开
-id = "f06ad2c1b2594b2b351986ac240c491d"
+#id = "f06ad2c1b2594b2b351986ac240c491d"
+#id = "e5deace96222d913d2fd20fa54112422"
+id = "eb5b5d68bc9f1bd937e99520e17b22b2"
 
 #host根据你抓包的url修改即可，非必要请勿修改
 host = "api.h5.sagx.net"
