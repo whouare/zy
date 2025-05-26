@@ -327,7 +327,9 @@ async function main() {
                 "businessId": 1
             })
             console.log(`拥有积分: ${findMemberPointsInfo?.data?.pointValue}\n`)
-            notice += `用户：${phone} 拥有积分: ${findMemberPointsInfo?.data?.pointValue}\n`
+            //电话号码隐私
+            var phone2 =   phone.replace(phone.substring(3,7),"****");
+            notice += `用户：${phone2} 拥有积分: ${findMemberPointsInfo?.data?.pointValue}\n`
             console.log("————————————")
             console.log("查询兑换")
             let findMemberPointsInfoa = await commonPost('/ehomes-new/homeManager/api/other/foton365MyOrders', {
