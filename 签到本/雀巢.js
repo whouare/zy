@@ -9,6 +9,9 @@
  *
  */
 
+//自己的User-Agent  不设置将会调用getRandomUserAgent随机分配
+// https://useragent.todaynav.com/ 微信打开此网站即可
+var User_Agent = "";
 
 const axios = require("axios");
 const $ = {
@@ -22,12 +25,17 @@ const nestleList = process.env.NESTLE_TOKEN ? process.env.NESTLE_TOKEN.split(/[\
 let message = "";
 
 function getRandomUserAgent() {
+    if (User_Agent) {
+        return User_Agent;
+    }
     const a = ["Mozilla/5.0 (iPhone; CPU iPhone OS 15_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148", "Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.81 Safari/537.36"];
     return a[Math.floor(Math.random() * a.length)];
 }
+
 function getRandomWait(e, a) {
     return Math.floor(Math.random() * (a - e + 1) + e);
 }
+
 async function sendRequest(e, a, n, t = null) {
     try {
         const o = {
@@ -50,6 +58,7 @@ async function sendRequest(e, a, n, t = null) {
         };
     }
 }
+
 const headers = {
     "User-Agent": getRandomUserAgent(),
     "content-type": "application/json",
@@ -70,6 +79,7 @@ const headers = {
         console.log("\n执行结果汇总：\n" + message);
     }
 })()["catch"](e => console.error(e))["finally"](() => console.log("任务完成"));
+
 async function main() {
     await getUserInfo();
     await everyDaySign()
@@ -78,6 +88,7 @@ async function main() {
     await $.wait(Math.floor(Math.random() * 1001 + 1e3));
     await getUserBalance();
 }
+
 async function getUserInfo() {
     try {
         const e = await sendRequest("https://crm.nestlechinese.com/openapi/member/api/User/GetUserInfo", "get", headers);
@@ -94,6 +105,7 @@ async function getUserInfo() {
         console.error("获取用户信息时发生异常 -> " + e);
     }
 }
+
 async function getTaskList() {
     try {
         const e = await sendRequest("https://crm.nestlechinese.com/openapi/activityservice/api/task/getlist", "post", headers);
@@ -109,6 +121,7 @@ async function getTaskList() {
         console.error("获取任务列表时发生异常 -> " + e);
     }
 }
+
 async function doTask(e) {
     try {
         const n = await sendRequest("https://crm.nestlechinese.com/openapi/activityservice/api/task/add", "post", headers, {
@@ -129,7 +142,7 @@ async function everyDaySign() {
         "goods_rule_id": 1
     });
     try {
-        const e = await sendRequest("https://crm.nestlechinese.com/openapi/activityservice/api/sign2025/sign", "post", headers,data);
+        const e = await sendRequest("https://crm.nestlechinese.com/openapi/activityservice/api/sign2025/sign", "post", headers, data);
         if (200 !== e.errcode) {
             return console.error("用户每日签到失败：" + e.errmsg);
         }
@@ -139,6 +152,7 @@ async function everyDaySign() {
         console.error("用户每日签到发生异常 -> " + e);
     }
 }
+
 async function getUserBalance() {
     try {
         const e = await sendRequest("https://crm.nestlechinese.com/openapi/pointsservice/api/Points/getuserbalance", "post", headers);
