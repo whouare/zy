@@ -2,7 +2,7 @@
  * cron "39 11,19 * * *" FTEJ.js
  * export FTEJ="账号1&密码1 账号2&密码2"
  */
-const $ = new Env('福田e家')
+const $ = new Env('福田e家作者原版')
 const FTEJ = ($.isNode() ? process.env.FTEJ : $.getdata("FTEJ")) || '';
 let phone = ''
 let password = ''

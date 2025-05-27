@@ -18,7 +18,7 @@
  * 群组：https://t.me/xzxxn7777
  */
 
-const $ = new Env('福田e家');
+const $ = new Env('福田e家并发版本');
 const FTEJ = ($.isNode() ? process.env.FTEJ : $.getdata("FTEJ")) || '';
 const FTEJ_PK = ($.isNode() ? process.env.FTEJ_PK : $.getdata("FTEJ_PK")) || '1'; //皮卡生活签到 开启=1，关闭=0
 const FTEJ_Lottery = ($.isNode() ? process.env.FTEJ_Lottery : $.getdata("FTEJ_Lottery")) || '0'; //积分转盘抽奖 开启=1，关闭=0
