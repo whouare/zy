@@ -327,7 +327,9 @@ async function main() {
                 "businessId": 1
             })
             console.log(`拥有积分: ${findMemberPointsInfo?.data?.pointValue}\n`)
-            notice += `用户：${phone} 拥有积分: ${findMemberPointsInfo?.data?.pointValue}\n`
+              var phone2 =   phone.replace(phone.substring(3,7),"****");
+            notice += `用户：${phone2} 拥有积分: ${findMemberPointsInfo?.data?.pointValue}\n`
+
         } catch (e) {
             console.log(e)
         }
