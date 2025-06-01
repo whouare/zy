@@ -8,7 +8,7 @@
 # 二、环境变量配置
 #
 # 1. xyy (账号信息，必需)
-#    格式: ysmuid&unionid&备注
+#    格式: ysmuid&unionid&XXX
 #    多账号格式: 账号1@账号2@账号3
 #    示例: 5a68xxxxxxx&oZdBpxxxxxxx&XXX@5a68xxx&oZdBpxxx&ff2cdxxx
 #    - ysmuid: 从Cookie中抓取
@@ -399,8 +399,8 @@ def process_account(account, i):
             print(f"📖 开始阅读: {link}", flush=True)
 
             if biz == "❗未知来源文章" or biz in checkDict:
-                print(f"❗❗❗发现检测文章--- {biz}", flush=True)
-                QLAPI.notify("⚠️ 小阅阅检测文章！请在120s内完成阅读！",link)
+                print(f"❗❗❗发现检测文章--- {biz} 待运行账号 {token}", flush=True)
+                QLAPI.notify("⚠️ 小阅阅检测文章！\n待过检测账号" + token + "\n请在120s内完成阅读！",link)
                 # url_pushplus = "http://www.pushplus.plus/send"
                 # data_pushplus = {
                 #     "token": token, "title": "⚠️ 小阅阅检测文章！请在120s内完成阅读！",
