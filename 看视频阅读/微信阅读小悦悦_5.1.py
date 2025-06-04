@@ -4,6 +4,7 @@
 #
 # 一、活动入口链接 (脚本顶层注释部分):
 #      # 活动入口 https://img.hnking.cn/img/20250521104923.png
+import datetime
 
 # 二、环境变量配置
 #
@@ -400,7 +401,11 @@ def process_account(account, i):
 
             if biz == "❗未知来源文章" or biz in checkDict:
                 print(f"❗❗❗发现检测文章--- {biz} 待运行账号 {token}", flush=True)
-                QLAPI.notify("⚠️ 小阅阅检测文章！\n待过检测账号" + token + "\n请在120s内完成阅读！",link)
+                # 得到当前时间
+
+                QLAPI.notify("⚠️ 小阅阅检测文章！待过检测账号：" + token , "请在120s内完成阅读！\n"
+                                                                         "当前时间：" + str(datetime.datetime.now()) +
+                                                                        "\n文章链接：" + link + "\n文章来源：" + biz )
                 # url_pushplus = "http://www.pushplus.plus/send"
                 # data_pushplus = {
                 #     "token": token, "title": "⚠️ 小阅阅检测文章！请在120s内完成阅读！",
