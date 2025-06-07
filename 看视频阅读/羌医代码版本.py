@@ -10,7 +10,7 @@ import os
 import requests
 import json
 
-import numpy as np
+import random
 import urllib3
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
@@ -86,10 +86,15 @@ for token in token_list:
         continue
 
 
-    def suijisecong():
-        suijishu = np.random.randint(3700, 5600)
-        return suijishu
+    # def suijisecong():
+    #     suijishu = np.random.randint(3700, 5600)
+    #     return suijishu
 
+
+
+    def suijisecong():
+        suijishu = random.randint(3700, 5600)
+        return suijishu
 
     time_url = f"https://{host}/api-user/v1/activityWatchVideo"
     time_data = {"userActivityId": userActivityId, "second": suijisecong()  # 设置一个很大的播放时间
