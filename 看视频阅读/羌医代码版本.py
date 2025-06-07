@@ -40,9 +40,15 @@ for token in token_list:
     response = requests.post(url, headers=headers, data=data, verify=False)
     if response.status_code == 200:
         response = response.json()
-        token = response["data"]["token"]
-        print(f"token获取成功，token为{token}")
+        try:
+            token = response["data"]["token"]
+            print(f"token获取成功，token为{token}")
+        except:
+            print(response)
+            continue
+
     else:
+        print(response)
         print("填写信息错误")
         continue
 
