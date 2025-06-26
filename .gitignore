@@ -5,6 +5,7 @@ target/
 !**/src/test/**/target/
 push.sh
 /encryptor/
+/a_test/
 ### STS ###
 .apt_generated
 .classpath
