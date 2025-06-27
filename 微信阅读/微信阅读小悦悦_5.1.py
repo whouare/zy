@@ -300,7 +300,7 @@ def process_account(account, i):
                 try:
                     response_article_domain_json = requests.post(url_get_article_domain,
                                                                  headers=headers_get_article_domain,
-                                                                 data=data_get_article_domain, timeout=7).json()
+                                                                 data=data_get_article_domain, timeout=25).json()
                     break
                 except (ConnectionError, Timeout) as e_net:
                     print(f"❗获取文章域名网络异常 (尝试 {retry + 1}/{max_retries}): {e_net}", flush=True)
@@ -350,7 +350,7 @@ def process_account(account, i):
             for retry in range(max_retries):
                 try:
                     response_article_link_json = requests.get(url_get_article_link, headers=headers_get_article_link,
-                                                              timeout=7).json()
+                                                              timeout=25).json()
                     break
                 except (ConnectionError, Timeout) as e_net:  # This is where the current error in log happens
                     print(f"❗获取文章链接网络异常 (尝试 {retry + 1}/{max_retries}): {e_net}", flush=True)
@@ -444,7 +444,7 @@ def process_account(account, i):
                     try:
                         response_submit_detection_json = requests.get(url_submit_detection,
                                                                       headers=headers_submit_detection,
-                                                                      timeout=7).json()
+                                                                      timeout=25).json()
                         break
                     except Exception as e_submit_det:
                         print(f"❗提交检测文章状态网络异常 (尝试 {retry + 1}/{max_retries}): {e_submit_det}", flush=True)
@@ -475,7 +475,7 @@ def process_account(account, i):
                 for retry in range(max_retries):
                     try:
                         response_submit_normal_json = requests.get(url_submit_normal, headers=headers_submit_normal,
-                                                                   timeout=7).json()
+                                                                   timeout=25).json()
                         break
                     except Exception as e_submit_norm:
                         print(f"❗提交普通文章状态网络异常 (尝试 {retry + 1}/{max_retries}): {e_submit_norm}",
