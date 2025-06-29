@@ -11,7 +11,18 @@ export xmqb = "passToken1&userId1@passToken2&userId2"
 #!/usr/bin/env python3
 
 
-KEY = "82e081b1262ae616e7bf3d7b6cff02a3317d2eda19ee2786503c5e9c4b1b3f15"
+KEY = ""
+if KEY == "":
+    str1 = '''
+    请填写KEY
+    关注公众号【极客快乐营】发送【小米钱包】获取KEY
+    公众号二维码：
+    https://free-img.400040.xyz/4/2025/06/30/686174d049215.png
+    '''
+    print(str1)
+    QLAPI.notify("请填写KEY", str1)
+    exit()
+
 
 config = '''
 
