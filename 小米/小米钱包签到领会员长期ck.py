@@ -12,6 +12,8 @@ export xmqb = "passToken1&userId1@passToken2&userId2"
 
 
 KEY = ""
+
+
 if KEY == "":
     str1 = '''
     请填写KEY
