@@ -1,3 +1,5 @@
+//环境变量xf 填cookie#BrowserUa#User-Agent#SystemUa#Ks-PkgId#请求体里的message#备注
+
 const _0x45d392 = _0x40b8;
 (function (_0x59d77, _0x15d575) {
     const _0x2c0eb3 = _0x40b8, _0x5df512 = _0x59d77();
