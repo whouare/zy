@@ -1,4 +1,5 @@
-
+# cron: 11 6,18 * * *
+# const $ = new Env("小米钱包签到领会员");
 '''
 格式为passToken&userId
 在浏览器输入https://account.xiaomi.com/登入
@@ -25,7 +26,8 @@ if KEY == "":
     QLAPI.notify("请填写KEY", str1)
     exit()
 
-
+print("请按需填写好配置,建议每天运行2-3次")
+# 请按需填写好配置
 config = '''
 
 # 环境变量名称
